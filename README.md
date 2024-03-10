@@ -49,9 +49,11 @@ pip install -r requirements.txt
 
 --> Click on admin button in the mysql row to open UI
 
+--> Click New then, give 'mathbuddy' as database name then, click create.
+
 --> Click on import from the UI.
 
---> Choose file: mathbuddy.sql and the click import.
+--> Choose file: mathbuddy.sql and the click import. 
 
 #
 
