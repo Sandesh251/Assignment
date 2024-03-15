@@ -46,8 +46,11 @@ pip install -r requirements.txt
 ### Database Setup
 
 --> Open xampp server & start apache and mysql.
+
 --> Click on admin button in the mysql row to open UI
+
 --> Click on import from the UI.
+
 --> Choose file: mathbuddy.sql and the click import.
 
 #
