@@ -14,7 +14,6 @@ static/
 
 # Ignore virtual environment
 venv/
-.env
 
 # Ignore IDE/Editor specific files
 .vscode/
