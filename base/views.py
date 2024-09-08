@@ -60,40 +60,55 @@ def registerPage(request):
 # search functionality
 # for post
 def home(request):
-    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    q = request.GET.get('q') if request.GET.get('q') is not None else ''
     context = None
+    
     try:
+        # Attempt to get the 'Attendance' topic
         attendance_topic = Topic.objects.get(name="Attendance")
-        if not attendance_topic:
-            attendance_topic = None
-        rooms = None
-        if not 'Attendance' in q:
+        print(f"Attendance Topic Found: {attendance_topic}")
+    except Topic.DoesNotExist:
+        attendance_topic = None
+        # print("Attendance Topic not found.")
+
+    try:
+        # Filter rooms based on the query parameter 'q'
+        if 'Attendance' not in q:
             rooms = Room.objects.filter(
                 Q(topic__name__icontains=q) |
                 Q(name__icontains=q) |
                 Q(description__icontains=q)
             ).exclude(topic=attendance_topic)
         else:
-            print('attned')
             rooms = Room.objects.filter(
                 Q(topic__name__icontains=q) |
                 Q(name__icontains=q) |
                 Q(description__icontains=q)
             )
+        
+        # print(f"Rooms Retrieved: {rooms}")
 
-        topics = Topic.objects.all()[0:5]
+        # Get the first 5 topics and count of rooms
+        topics = Topic.objects.all()[:5]
         room_count = rooms.count()
-        room_messages = Message.objects.filter(
-            Q(room__topic__name__icontains=q))[0:3]
 
-        context = {'rooms': rooms, 'topics': topics,
-                'room_count': room_count, 'room_messages': room_messages}
+        # Retrieve the most recent 3 messages
+        room_messages = Message.objects.filter(
+            Q(room__topic__name__icontains=q)
+        )[:3]
+
+        # Build the context dictionary
+        context = {
+            'rooms': rooms,
+            'topics': topics,
+            'room_count': room_count,
+            'room_messages': room_messages,
+        }
 
     except Exception as e:
-        print("Error in home page",e)
+        print("Error in home view:", e)
+
     return render(request, 'base/home.html', context)
-
-
 
 # for browse topics
 def topicsPage(request):
