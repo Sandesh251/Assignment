@@ -87,17 +87,23 @@ WSGI_APPLICATION = 'mathbuddy.wsgi.application'
 # MySQL Database connection
 from decouple import config # type: ignore
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'mathbuddy',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': '127.0.0.1',  # 'localhost' is also acceptable
+#         'PORT': '3306',  # Default port for MySQL
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mathbuddy',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',  # 'localhost' is also acceptable
-        'PORT': '3306',  # Default port for MySQL
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 SECRET_KEY = config('SECRET_KEY')
 
